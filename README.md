@@ -76,7 +76,7 @@ Fill up rest of the fields. Meaning of each field is discussed below:
 - `AUTHORIZED_CHATS`: Fill user_id and chat_id of groups/users you want to authorize. Separate them by space.
 - `SUDO_USERS`: Fill user_id of users whom you want to give sudo permission. Separate them by space.
 - `IGNORE_PENDING_REQUESTS`: Ignore pending requests after restart. Default is `False`.
-- `USE_SERVICE_ACCOUNTS`: Whether to use Service Accounts or not. For this to work see [Using Service Accounts](https://codewithweeb/mirror-with-weeb#generate-service-accounts-what-is-service-account) section below. Default is `False`.
+- `USE_SERVICE_ACCOUNTS`: Whether to use Service Accounts or not. For this to work see [Using Service Accounts](https://github.com/codewithweeb/mirror-with-weeb#using-service-accounts-for-uploading-to-avoid-user-rate-limit) section below. Default is `False`.
 - `INDEX_URL`: Refer to https://github.com/cheems/goindex-extended.
 - `STATUS_LIMIT`: Limit the no. of tasks shown in status message with buttons. **NOTE**: Recommended limit is `4` tasks.
 - `STOP_DUPLICATE`: Bot will check file in Drive, if it is present in Drive, downloading or cloning will be stopped. (**NOTE**: File will be checked using filename not file hash, so this feature is not perfect yet). Default is `False`.
