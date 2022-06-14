@@ -77,7 +77,7 @@ Fill up rest of the fields. Meaning of each field is discussed below:
 - `SUDO_USERS`: Fill user_id of users whom you want to give sudo permission. Separate them by space.
 - `IGNORE_PENDING_REQUESTS`: Ignore pending requests after restart. Default is `False`.
 - `USE_SERVICE_ACCOUNTS`: Whether to use Service Accounts or not. For this to work see [Using Service Accounts](https://github.com/codewithweeb/mirror-with-weeb#using-service-accounts-for-uploading-to-avoid-user-rate-limit) section below. Default is `False`.
-- `INDEX_URL`: Refer to https://github.com/cheems/goindex-extended.
+- `INDEX_URL`: Refer to https://gitlab.com/GoogleDriveIndex/Google-Drive-Index.
 - `STATUS_LIMIT`: Limit the no. of tasks shown in status message with buttons. **NOTE**: Recommended limit is `4` tasks.
 - `STOP_DUPLICATE`: Bot will check file in Drive, if it is present in Drive, downloading or cloning will be stopped. (**NOTE**: File will be checked using filename not file hash, so this feature is not perfect yet). Default is `False`.
 - `CMD_INDEX`: commands index number. This number will added at the end all commands.
@@ -141,7 +141,7 @@ Fill up rest of the fields. Meaning of each field is discussed below:
 - `STORAGE_THRESHOLD`: To leave specific storage free and any download will lead to leave free storage less than this value will be cancelled. Don't add unit. Default unit is `GB`.
 
 ### Buttons
-- `VIEW_LINK`: View Link button to open file Index Link in browser instead of direct download link, you can figure out if it's compatible with your Index code or not, open any video from you Index and check if its URL ends with `?a=view`, if yes make it `True`, compatible with [Goindex-extended](https://github.com/cheems/goindex-extended) Code. Default is `False`.
+- `VIEW_LINK`: View Link button to open file Index Link in browser instead of direct download link, you can figure out if it's compatible with your Index code or not, open any video from you Index and check if its URL ends with `?a=view`, if yes make it `True`, compatible with [BhadooIndex](https://gitlab.com/GoogleDriveIndex/Google-Drive-Index) Code. Default is `False`.
 
 - Three buttons are already added including Drive Link, Index Link, and View Link, you can add extra buttons, if you don't know what are the below entries, simply leave them empty.
   - `BUTTON_FOUR_NAME`:
