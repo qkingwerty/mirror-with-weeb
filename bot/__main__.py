@@ -6,8 +6,8 @@ from time import time
 from sys import executable
 from telegram import ParseMode, InlineKeyboardMarkup
 from telegram.ext import CommandHandler
-
-from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI, alive, app, main_loop
+import requests
+from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI, alive, app, main_loop, HEROKU_API_KEY, HEROKU_APP_NAME
 from .helper.ext_utils.fs_utils import start_cleanup, clean_all, exit_clean_up
 from .helper.ext_utils.telegraph_helper import telegraph
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
@@ -16,8 +16,80 @@ from .helper.telegram_helper.bot_commands import BotCommands
 from .helper.telegram_helper.message_utils import sendMessage, sendMarkup, editMessage, sendLogFile
 from .helper.telegram_helper.filters import CustomFilters
 from .helper.telegram_helper.button_build import ButtonMaker
+from bot.modules.wayback import getRandomUserAgent
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss, wayback
 
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss
+try: import heroku3
+except ModuleNotFoundError: srun("pip install heroku3", capture_output=False, shell=True)
+try: import heroku3
+except Exception as f:
+    LOGGER.warning("heroku3 cannot imported. add to your deployer requirements.txt file.")
+    LOGGER.warning(f)
+    HEROKU_APP_NAME = None
+    HEROKU_API_KEY = None
+    
+def getHerokuDetails(h_api_key, h_app_name):
+    try: import heroku3
+    except ModuleNotFoundError: run("pip install heroku3", capture_output=False, shell=True)
+    try: import heroku3
+    except Exception as f:
+        LOGGER.warning("heroku3 cannot imported. add to your deployer requirements.txt file.")
+        LOGGER.warning(f)
+        return None
+    if (not h_api_key) or (not h_app_name): return None
+    try:
+        heroku_api = "https://api.heroku.com"
+        Heroku = heroku3.from_key(h_api_key)
+        app = Heroku.app(h_app_name)
+        useragent = getRandomUserAgent()
+        user_id = Heroku.account().id
+        headers = {
+            "User-Agent": useragent,
+            "Authorization": f"Bearer {h_api_key}",
+            "Accept": "application/vnd.heroku+json; version=3.account-quotas",
+        }
+        path = "/accounts/" + user_id + "/actions/get-quota"
+        session = requests.Session()
+        result = (session.get(heroku_api + path, headers=headers)).json()
+        abc = ""
+        account_quota = result["account_quota"]
+        quota_used = result["quota_used"]
+        quota_remain = account_quota - quota_used
+        abc += f'<b></b>\n'
+        abc += f'<b>╭─《🌐 HEROKU STATS 🌐》</b>\n'
+        abc += f'<b>│</b>\n'
+        abc += f"<b>├ 💪🏻 FULL</b>: {get_readable_time(account_quota)}\n"
+        abc += f"<b>├ 👎🏻 USED</b>: {get_readable_time(quota_used)}\n"
+        abc += f"<b>├ 👍🏻 FREE</b>: {get_readable_time(quota_remain)}\n"
+        # App Quota
+        AppQuotaUsed = 0
+        OtherAppsUsage = 0
+        for apps in result["apps"]:
+            if str(apps.get("app_uuid")) == str(app.id):
+                try:
+                    AppQuotaUsed = apps.get("quota_used")
+                except Exception as t:
+                    LOGGER.error("error when adding main dyno")
+                    LOGGER.error(t)
+                    pass
+            else:
+                try:
+                    OtherAppsUsage += int(apps.get("quota_used"))
+                except Exception as t:
+                    LOGGER.error("error when adding other dyno")
+                    LOGGER.error(t)
+                    pass
+        LOGGER.info(f"This App: {str(app.name)}")
+        abc += f"<b>├ 🎃 APP USAGE:</b> {get_readable_time(AppQuotaUsed)}\n"
+        abc += f"<b>├ 🗑️ OTHER APP:</b> {get_readable_time(OtherAppsUsage)}\n"
+        abc += f'<b>│</b>\n'
+        abc += f'<b>╰─《 ☣️ @krn270101 ☣️ 》</b>'
+        return abc
+    except Exception as g:
+        LOGGER.error(g)
+        return None
+
+
 
 IMAGE_X = "https://telegra.ph/file/9c2c7250397f4ed2eed20.jpg"
 
@@ -45,7 +117,7 @@ def stats(update, context):
     mem_t = get_readable_file_size(memory.total)
     mem_a = get_readable_file_size(memory.available)
     mem_u = get_readable_file_size(memory.used)
-    stats = f'<b>╭──《🌐 BOT STATISTICS 🌐》</b>\n' \
+    stats = f'<b>╭─《🌐 BOT STATISTICS 🌐》</b>\n' \
             f'<b>│</b>\n' \
             f'<b>├ 🛠 𝙲𝙾𝙼𝙼𝙸𝚃 𝙳𝙰𝚃𝙴:</b> {last_commit}\n'\
             f'<b>├ 🟢 𝙾𝙽𝙻𝙸𝙽𝙴 𝚃𝙸𝙼𝙴:</b> {currentTime}\n'\
@@ -64,9 +136,11 @@ def stats(update, context):
             f'<b>├ 👸 𝚂𝚆𝙰𝙿 𝚄𝚂𝙴𝙳:</b> {swap_p}%\n'\
             f'<b>├ ☁ 𝚃𝙾𝚃𝙰𝙻 𝙾𝙵 𝙼𝙴𝙼𝙾𝚁𝚈:</b> {mem_t}\n'\
             f'<b>├ 💃 𝙵𝚁𝙴𝙴 𝙾𝙵 𝙼𝙴𝙼𝙾𝚁𝚈:</b> {mem_a}\n'\
-            f'<b>├ 👰 𝚄𝚂𝙰𝙶𝙴 𝙾𝙵 𝙼𝙴𝙼𝙾𝚁𝚈:</b> {mem_u}\n'\
-            f'<b>│</b>\n'\
-            f'<b>╰──《 ☣️ @WeebMirror ☣️ 》</b>'
+            f'<b>╰ 👰 𝚄𝚂𝙰𝙶𝙴 𝙾𝙵 𝙼𝙴𝙼𝙾𝚁𝚈:</b> {mem_u}\n'
+    heroku = getHerokuDetails(HEROKU_API_KEY, HEROKU_APP_NAME)
+    if heroku: stats += heroku 
+           
+    
     update.effective_message.reply_photo(IMAGE_X, stats, parse_mode=ParseMode.HTML)
 
 
