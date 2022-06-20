@@ -524,6 +524,15 @@ try:
     SEARCH_PLUGINS = jsnloads(SEARCH_PLUGINS)
 except:
     SEARCH_PLUGINS = None
+try:
+    HEROKU_API_KEY = getConfig('HEROKU_API_KEY')
+    HEROKU_APP_NAME = getConfig('HEROKU_APP_NAME')
+    if len(HEROKU_API_KEY) == 0 or len(HEROKU_APP_NAME) == 0:
+        raise KeyError
+except KeyError:
+    LOGGER.warning("Heroku details not entered.")
+    HEROKU_API_KEY = None
+    HEROKU_APP_NAME = None
 
 updater = tgUpdater(token=BOT_TOKEN, request_kwargs={'read_timeout': 20, 'connect_timeout': 15})
 bot = updater.bot
