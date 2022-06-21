@@ -220,13 +220,12 @@ cancel - Cancel a task
 cancelall - Cancel all tasks
 del - Delete file/folder from Drive
 log - Get the Bot Log
+speedtest - Get server speedtest
 shell - Run commands in Shell
 restart - Restart the Bot
 stats - Bot Usage Stats
 ping - Ping the Bot
 help - All cmds with description
-
-
 
 ```
 ------
