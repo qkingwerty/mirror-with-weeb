@@ -7,5 +7,5 @@
 The changes in your `UPSTREAM_REPO` will take affect only after restart (use /restart command to restart the bot).
 
 
-### Editing 
-more editing vedio will be upload in my youtube channel soon 
+ 
+ 
