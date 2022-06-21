@@ -225,8 +225,8 @@ restart - Restart the Bot
 stats - Bot Usage Stats
 ping - Ping the Bot
 help - All cmds with description
-addleechlog - Add leech log in database
-rmleechlog - Remove leech log from database
+
+
 
 ```
 ------
