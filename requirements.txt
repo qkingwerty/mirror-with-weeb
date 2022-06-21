@@ -33,6 +33,7 @@ qbittorrent-api
 requests
 selenium
 six
+speedtest-cli
 telegraph
 tenacity
 tgCrypto
