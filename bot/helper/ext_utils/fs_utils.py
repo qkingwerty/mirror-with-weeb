@@ -10,7 +10,7 @@ from math import ceil
 from re import split as re_split, I
 
 from .exceptions import NotSupportedExtractionArchive
-from bot import aria2, app, LOGGER, DOWNLOAD_DIR, get_client, TG_SPLIT_SIZE, EQUAL_SPLITS
+from bot import aria2, app, LOGGER, DOWNLOAD_DIR, get_client, TG_SPLIT_SIZE, EQUAL_SPLITS, STORAGE_THRESHOLD
 
 VIDEO_SUFFIXES = ("M4V", "MP4", "MOV", "FLV", "WMV", "3GP", "MPG", "WEBM", "MKV", "AVI")
 
