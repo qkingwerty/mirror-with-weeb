@@ -31,6 +31,7 @@ class _BotCommands:
         self.QbUnzipMirrorCommand = f'qbunzipmirror{CMD_INDEX}'
         self.QbZipMirrorCommand = f'qbzipmirror{CMD_INDEX}'
         self.DeleteCommand = f'del{CMD_INDEX}'
+        self.UsageCommand = f'usage{CMD_INDEX}'
         self.ShellCommand = f'shell{CMD_INDEX}'
         self.ExecHelpCommand = f'exechelp{CMD_INDEX}'
         self.LeechSetCommand = f'leechset{CMD_INDEX}'
