@@ -224,6 +224,7 @@ speedtest - Get server speedtest
 shell - Run commands in Shell
 restart - Restart the Bot
 stats - Bot Usage Stats
+usage - Heroku app usage
 ping - Ping the Bot
 help - All cmds with description
 
