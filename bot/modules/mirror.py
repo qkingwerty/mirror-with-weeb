@@ -77,7 +77,7 @@ class MirrorListener:
         if self.isZip:
             try:
                 with download_dict_lock:
-                    download_dict[self.uid] = ZipStatus(name, m_path, size, self.message)
+                    download_dict[self.uid] = ZipStatus(name, m_path, size)
                 path = m_path + ".zip"
                 LOGGER.info(f'Zip: orig_path: {m_path}, zip_path: {path}')
                 if self.pswd is not None:
@@ -104,7 +104,7 @@ class MirrorListener:
                     path = get_base_name(m_path)
                 LOGGER.info(f"Extracting: {name}")
                 with download_dict_lock:
-                    download_dict[self.uid] = ExtractStatus(name, m_path, size, self.message)
+                    download_dict[self.uid] = ExtractStatus(name, m_path, size)
                 if ospath.isdir(m_path):
                     for dirpath, subdir, files in walk(m_path, topdown=False):
                         for file_ in files:
