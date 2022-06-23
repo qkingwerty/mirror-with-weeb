@@ -20,6 +20,7 @@ gunicorn
 heroku3
 lk21
 lxml
+mediainfo
 megasdkrestclient
 pillow
 psutil
