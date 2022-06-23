@@ -5,7 +5,4 @@
 - `UPSTREAM_BRANCH`: Upstream branch for update. Default is `update`. (don't ever fill heroku here)
 
 The changes in your `UPSTREAM_REPO` will take affect only after restart (use /restart command to restart the bot).
-
-testing github dev
- 
  
