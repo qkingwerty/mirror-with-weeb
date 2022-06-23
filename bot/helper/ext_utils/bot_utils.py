@@ -188,6 +188,7 @@ def get_readable_message():
                     pass
                 msg += f"\n<b>╰❎ Cancel: </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n<b>_____________________________________</b>"
+            
             elif download.status() == MirrorStatus.STATUS_SEEDING:
                 msg += f"\n<b>├📦 Size: </b>{download.size()}"
                 msg += f"\n<b>├⛓️ Engine:</b> <code>qBittorrent v4.4.2</code>"
