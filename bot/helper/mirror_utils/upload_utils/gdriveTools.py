@@ -717,7 +717,7 @@ class GoogleDriveHelper:
                 self.__gDrive_file(meta)
                 msg += f'\n<b>├📦 Size: </b>{get_readable_file_size(self.__total_bytes)}'
                 msg += f'\n<b>├♻ Type: </b>{mime_type}'
-                msg += f'\n<b>├🗂️ Files: </b>{self.__total_files}'
+            msg += f'\n<b>├🗂️ Files: </b>{self.__total_files}'
         except Exception as err:
             if isinstance(err, RetryError):
                 LOGGER.info(f"Total Attempts: {err.last_attempt.attempt_number}")
