@@ -41,6 +41,17 @@ class MirrorStatus:
     STATUS_CHECKING = "CheckingUp...📝"
     STATUS_SEEDING = "Seeding...🌧"
 
+class EngineStatus:
+    STATUS_ARIA = "Aria2c v1.35.0"
+    STATUS_GD = "Google Api v2.51.0"
+    STATUS_MEGA = "MegaSDK v3.12.0"
+    STATUS_QB = "qBittorrent v4.3.9"
+    STATUS_TG = "Pyrogram v2.0.27"
+    STATUS_YT = "YT-dlp v22.5.18"
+    STATUS_EXT = "Extract | pExtract"
+    STATUS_SPLIT = "FFmpeg v2.9.1"
+    STATUS_ZIP = "p7zip v16.02"
+
 PROGRESS_MAX_SIZE = 100 // 9
 PROGRESS_INCOMPLETE = ['◔', '◔', '◑', '◑', '◑', '◕', '◕']
     
@@ -162,6 +173,7 @@ def get_readable_message():
                 msg += f"\n<b>├⚡ Speed:</b> {download.speed()}"
                 msg += f"\n<b>├⏳ ETA:</b> {download.eta()}"
                 msg += f"\n<b>├⏳ Elapsed: </b>{get_readable_time(time() - download.message.date.timestamp())}"
+                msg += f"\n<b>├⛓️ Engine :</b> {download.eng()}"
                 msg += f"\n<b>├👤 User | </b> <b>{download.message.from_user.first_name}</b>"
                 msg += f"\n<b>├⚠️ Warn: </b> <code>/warn {download.message.from_user.id}</code>"
                 try:
@@ -178,6 +190,7 @@ def get_readable_message():
                 msg += f"\n<b>_____________________________________</b>"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
                 msg += f"\n<b>├📦 Size: </b>{download.size()}"
+                msg += f"\n<b>├⛓️ Engine:</b> <code>qBittorrent v4.4.2</code>"
                 msg += f"\n<b>├⚡ Speed: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
                 msg += f" | <b>🔺Uploaded: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
                 msg += f"\n<b>├📎 Ratio: </b>{round(download.torrent_info().ratio, 3)}"
@@ -186,6 +199,7 @@ def get_readable_message():
                 msg += f"\n<b>╰❎ Cancel: </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n<b>_____________________________________</b>"
             else:
+                msg += f"\n<b>├⛓️ Engine :</b> {download.eng()}"
                 msg += f"\n<b>╰📐 Size: </b>{download.size()}"
                 msg += f"\n<b>_____________________________________</b>"
             msg += "\n\n"

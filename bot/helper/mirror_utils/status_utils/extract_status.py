@@ -1,4 +1,4 @@
-from bot.helper.ext_utils.bot_utils import get_readable_file_size, MirrorStatus
+from bot.helper.ext_utils.bot_utils import get_readable_file_size, MirrorStatus, EngineStatus
 
 
 class ExtractStatus:
@@ -33,3 +33,6 @@ class ExtractStatus:
 
     def processed_bytes(self):
         return 0
+
+    def eng(self):
+        return EngineStatus.STATUS_EXT
