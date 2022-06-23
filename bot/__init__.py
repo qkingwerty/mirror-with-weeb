@@ -533,6 +533,10 @@ except KeyError:
     LOGGER.warning("Heroku details not entered.")
     HEROKU_API_KEY = None
     HEROKU_APP_NAME = None
+try:
+    IMAGE_URL = getConfig('IMAGE_URL')
+except KeyError:
+    IMAGE_URL = 'https://telegra.ph/file/6b22ef7b8a733c5131d3f.jpg'
 
 updater = tgUpdater(token=BOT_TOKEN, request_kwargs={'read_timeout': 20, 'connect_timeout': 15})
 bot = updater.bot
