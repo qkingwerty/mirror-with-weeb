@@ -17,7 +17,7 @@ from .helper.telegram_helper.message_utils import sendMessage, sendMarkup, editM
 from .helper.telegram_helper.filters import CustomFilters
 from .helper.telegram_helper.button_build import ButtonMaker
 from bot.modules.wayback import getRandomUserAgent
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss, wayback, speedtest, usage
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss, wayback, speedtest, usage, anilist
 
 try: import heroku3
 except ModuleNotFoundError: srun("pip install heroku3", capture_output=False, shell=True)
@@ -255,7 +255,13 @@ help_string_telegraph_user = f'''
 <br>sites: <code>rarbg, 1337x, yts, etzv, tgx, torlock, piratebay, nyaasi, ettv</code><br><br>
 • <b>/{BotCommands.StatusCommand}</b>: Shows a status of all the downloads
 <br><br>
+• <b>/{BotCommands.UsageCommand}</b>: Shows Heroku App Dyno Usage
+<br><br>
 • <b>/{BotCommands.StatsCommand}</b>: Show Stats of the machine the bot is hosted on
+<br><br>
+• <b>/{BotCommands.SpeedCommand}</b>: Speedtest of Heroku server
+<br><br>
+• <b>/weebhelp</b>: Okatu helper
 '''
 
 help_user = telegraph.create_page(
@@ -292,7 +298,52 @@ def bot_help(update, context):
     button.buildbutton("🛡️ Admin", f"https://telegra.ph/{help_admin}")
     sendMarkup(help_string, context.bot, update.message, InlineKeyboardMarkup(button.build_menu(2)))
 
+    
+botcmds = [
+
+        (f'{BotCommands.MirrorCommand}', 'Mirror'),
+        (f'{BotCommands.ZipMirrorCommand}','Mirror and upload as zip'),
+        (f'{BotCommands.UnzipMirrorCommand}','Mirror and extract files'),
+        (f'{BotCommands.QbMirrorCommand}','Mirror torrent using qBittorrent'),
+        (f'{BotCommands.QbZipMirrorCommand}','Mirror torrent and upload as zip using qb'),
+        (f'{BotCommands.QbUnzipMirrorCommand}','Mirror torrent and extract files using qb'),
+        (f'{BotCommands.WatchCommand}','Mirror yt-dlp supported link'),
+        (f'{BotCommands.ZipWatchCommand}','Mirror yt-dlp supported link as zip'),
+        (f'{BotCommands.CloneCommand}','Copy file/folder to Drive'),
+        (f'{BotCommands.LeechCommand}','Leech'),
+        (f'{BotCommands.ZipLeechCommand}','Leech and upload as zip'),
+        (f'{BotCommands.UnzipLeechCommand}','Leech and extract files'),
+        (f'{BotCommands.QbLeechCommand}','Leech torrent using qBittorrent'),
+        (f'{BotCommands.QbZipLeechCommand}','Leech torrent and upload as zip using qb'),
+        (f'{BotCommands.QbUnzipLeechCommand}','Leech torrent and extract using qb'),
+        (f'{BotCommands.LeechWatchCommand}','Leech yt-dlp supported link'),
+        (f'{BotCommands.LeechZipWatchCommand}','Leech yt-dlp supported link as zip'),
+        (f'{BotCommands.CountCommand}','Count file/folder of Drive'),
+        (f'{BotCommands.DeleteCommand}','Delete file/folder from Drive'),
+        (f'{BotCommands.CancelMirror}','Cancel a task'),
+        (f'{BotCommands.CancelAllCommand}','Cancel all downloading tasks'),
+        (f'{BotCommands.ListCommand}','Search in Drive'),
+        (f'{BotCommands.LeechSetCommand}','Leech settings'),
+        (f'{BotCommands.SetThumbCommand}','Set thumbnail'),
+        (f'{BotCommands.StatusCommand}','Get mirror status message'),
+        (f'{BotCommands.StatsCommand}','Bot usage stats'),
+        (f'{BotCommands.UsageCommand}','Heroku Dyno usage'),
+        (f'{BotCommands.SpeedCommand}','Speedtest'),
+        (f'{BotCommands.WayBackCommand}','Internet Archive'),
+        (f'{BotCommands.PingCommand}','Ping the bot'),
+        (f'{BotCommands.RestartCommand}','Restart the bot'),
+        (f'{BotCommands.LogCommand}','Get the bot Log'),
+        (f'{BotCommands.HelpCommand}','Get detailed help'),
+        (f'{BotCommands.AuthorizedUsersCommand}','Authorized Users/Chats'),
+        (f'{BotCommands.AuthorizeCommand}','Authorize user/chat'),
+        (f'{BotCommands.UnAuthorizeCommand}','UnAuthorize user/chat'),
+        (f'{BotCommands.AddSudoCommand}','Add Sudo'),
+        (f'{BotCommands.RmSudoCommand}','Remove Sudo')
+    ]    
+
+    
 def main():
+    bot.set_my_commands(botcmds)
     start_cleanup()
     if INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
         notifier_dict = DbManger().get_incomplete_tasks()
