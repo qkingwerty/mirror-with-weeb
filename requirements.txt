@@ -31,8 +31,6 @@ python-magic
 python-telegram-bot
 qbittorrent-api
 requests
-selenium
-six
 speedtest-cli
 telegraph
 tenacity
