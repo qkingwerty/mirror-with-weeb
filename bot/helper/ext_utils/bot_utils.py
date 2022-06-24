@@ -387,12 +387,12 @@ def bot_sys_stats():
                 num_split += 1
     stats = f"Bot Statistics"
     stats += f"""
-Bot Uptime: {currentTime}
-T-DN: {recv} | T-UP: {sent}
-CPU: {cpu}% | RAM: {mem}%
-Disk: {total} | Free: {free}
-Used: [{disk}%] is {used}
 Made with ❤️ by Weeb
+Sent : {sent} | Recv : {recv}
+CPU : {cpu}% | RAM : {mem}%
+DL : {num_active} | UP : {num_upload} | SPLIT : {num_split}
+ZIP : {num_archi} | UNZIP : {num_extract} | TOTAL : {tasks}
+Limits : T/D : {TORRENT_DIRECT_LIMIT}GB | Z/U : {ZIP_UNZIP_LIMIT}GB
 """
     return stats
 dispatcher.add_handler(
